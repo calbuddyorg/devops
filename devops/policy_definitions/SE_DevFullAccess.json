@@ -1,0 +1,43 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DevFullAccess",
+      "Effect": "Allow",
+      "Action": [
+        "amplify:*",
+        "airflow:*",
+        "appflow:*",
+        "apigateway:*",
+        "autoscaling-plans:*",
+        "athena:*",
+        "batch:*",
+        "cloudwatch:*",
+        "datapipeline:*",
+        "events:*",
+        "ec2:*",
+        "glue:*",
+        "iam:*",
+        "kinesis:*",
+        "lakeformation:*",
+        "lambda:*",
+        "logs:*",
+        "pipes:*",
+        "rum:*",
+        "scheduler:*",
+        "scheduler:*",
+        "secretsmanager:*",
+        "ses:*",
+        "sns:*",
+        "sqs:*",
+        "states:*",
+        "support:*",
+        "cognito-identity:*",
+        "cognito-idp:*",
+        "cognito-sync:*",
+        "rds:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

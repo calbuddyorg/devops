@@ -1,0 +1,30 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "CICDFullAccess",
+      "Effect": "Allow",
+      "Action": [
+        "codecommit:*",
+        "cloudshell:*",
+        "cloudformation:*",
+        "codestar:*",
+        "codestar-connections:*",
+        "codestar-notifications:*",
+        "cloud9:*",
+        "codebuild:*",
+        "codepipeline:*",
+        "codedeploy:*",
+        "codeartifact:*",
+        "ssm:*",
+        "ecr:*",
+        "kms:*",
+        "sts:*",
+        "iam:*",
+        "s3:*",
+        "secretsmanager:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

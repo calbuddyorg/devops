@@ -1,0 +1,35 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - npm install -g aws-cdk
+  pre_build:
+    commands:
+      - pip install --upgrade pip
+      - python3 -m venv .venv
+      - source .venv/bin/activate
+      - echo "VENV HAS BEEN ACTIVATED"
+      - pip install -r ./requirements.txt -t .
+      - echo "SETTING UP ENVIRONMENTAL VARIABLES"
+      - set -a
+      - source .env
+      - set +a
+      - echo "Looking up SSO Instance ARN"
+      - echo "EXISTING VALUE -> SSO_INSTANCE_ARN=$SSO_INSTANCE_ARN"
+      - echo "LIST-INSTANCES RESPONSE:"
+      - aws sso-admin list-instances --region "$SSO_REGION"
+      - if [[ ! "$SSO_INSTANCE_ARN" =~ ^arn:aws:sso ]]; then
+      - SSO_INSTANCE_ARN=$(aws sso-admin list-instances --region "$SSO_REGION" --query "Instances[0].InstanceArn" --output text | grep -v '^None' | head -n 1)
+      - export SS0_INSTANCE_ARN
+      - echo "NEW VALUE -> SSO_INSTANCE_ARN=$SSO_INSTANCE_ARN"
+      - fi
+  build:
+    commands:
+      - echo "SYNTHETIZING THE CDK APP"
+      - cdk synth
+      - echo "SYNTHETIZATION HAS ENDED"
+      - echo "PRINTING CDK DIFF"
+      - cdk diff
+      - cdk deploy --all --require-approval never --progress events --outputs-file outputs.json

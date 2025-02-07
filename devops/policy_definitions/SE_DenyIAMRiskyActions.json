@@ -50,7 +50,7 @@
         "iam:DeletePolicyVersion",
         "iam:SetDefaultPolicyVersion"
       ],
-      "Resource": "arn:aws:iam::654654598073:policy/SE_*"
+      "Resource": "arn:aws:iam::481180369246:policy/SE_*"
     }
   ]
 }

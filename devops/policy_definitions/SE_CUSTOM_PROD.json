@@ -11,7 +11,7 @@
         "secretsmanager:ListSecrets",
         "secretsmanager:ListSecretVersionIds"
       ],
-      "Resource": ["arn:aws:secretsmanager:us-east-2:654654598073:secret:*"]
+      "Resource": ["arn:aws:secretsmanager:us-east-2:481180369246:secret:*"]
     },
     {
       "Sid": "CustomKMSKeyAccess",

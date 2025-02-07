@@ -2,7 +2,7 @@ import * as cdk from "aws-cdk-lib";
 
 export const softwareEngineering: { [key: string]: cdk.Environment } = {
   ROOT: {
-    account: "654654598073",
+    account: "481180369246",
     region: "us-east-2",
   },
   // DEV: {

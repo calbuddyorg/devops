@@ -30,7 +30,7 @@
         "secretsmanager:ListSecretVersionIds"
       ],
       "Resource": [
-        "arn:aws:secretsmanager:us-east-2:654654598073:secret:SE_Configuration*"
+        "arn:aws:secretsmanager:us-east-2:481180369246:secret:SE_Configuration*"
       ]
     }
   ]

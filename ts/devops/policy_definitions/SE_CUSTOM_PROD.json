@@ -1,78 +1,51 @@
 {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Sid": "SecretsProdAccountSpecialPolicy",
-        "Effect": "Allow",
-        "Action": [
-          "secretsmanager:GetSecretValue",
-          "secretsmanager:PutSecretValue",
-          "secretsmanager:DescribeSecret",
-          "secretsmanager:ListSecrets",
-          "secretsmanager:ListSecretVersionIds"
-        ],
-        "Resource": [
-          "arn:aws:secretsmanager:us-east-2:654654598073:secret:*"
-        ]
-      },
-      {
-        "Sid": "CustomKMSKeyAccess",
-        "Effect": "Allow",
-        "Action": [
-          "kms:Encrypt",
-          "kms:Decrypt",
-          "kms:ReEncrypt*",
-          "kms:CreateGrant",
-          "kms:DescribeKey",
-          "kms:GenerateDataKey*"
-        ],
-        "Resource": "*",
-        "Condition": {
-          "ForAnyValue:StringLike": {
-            "kms:ResourceAliases": "alias/SE_Root_KMS_Key"
-          }
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "SecretsProdAccountSpecialPolicy",
+      "Effect": "Allow",
+      "Action": [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:PutSecretValue",
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:ListSecrets",
+        "secretsmanager:ListSecretVersionIds"
+      ],
+      "Resource": ["arn:aws:secretsmanager:us-east-2:654654598073:secret:*"]
+    },
+    {
+      "Sid": "CustomKMSKeyAccess",
+      "Effect": "Allow",
+      "Action": [
+        "kms:Encrypt",
+        "kms:Decrypt",
+        "kms:ReEncrypt*",
+        "kms:CreateGrant",
+        "kms:DescribeKey",
+        "kms:GenerateDataKey*"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "ForAnyValue:StringLike": {
+          "kms:ResourceAliases": "alias/SE_Root_KMS_Key"
         }
-      },
-      {
-        "Sid": "AllowSqsRedriveActioninAllQueues",
-        "Effect": "Allow",
-        "Action": [
-          "sqs:StartMessageMoveTask",
-          "sqs:SendMessage",
-          "sqs:deletemessage"
-        ],
-        "Resource": "arn:aws:sqs:*:*:*"
-      },
-      {
-        "Sid": "AllowApiGatewayDeployments",
-        "Effect": "Allow",
-        "Action": "apigateway:POST",
-        "Resource": "*"
-      },
-      {
-        "Sid": "AllowMWAAAccess",
-        "Effect": "Allow",
-        "Action": [
-          "airflow:GetEnvironment",
-          "airflow:ListEnvironments",
-          "airflow:UpdateEnvironment",
-          "airflow:CreateWebLoginToken",
-          "airflow:PublishMetrics",
-          "airflow:TagResource"
-        ],
-        "Resource": "*"
-      },
-      {
-        "Sid": "AllowDynamoDbActions",
-        "Effect": "Allow",
-        "Action": [
-          "dynamodb:PutItem",
-          "dynamodb:GetItem",
-          "dynamodb:UpdateItem",
-          "dynamodb:DeleteItem"
-        ],
-        "Resource": "*"
       }
-    ]
+    },
+    {
+      "Sid": "AllowSqsRedriveActioninAllQueues",
+      "Effect": "Allow",
+      "Action": [
+        "sqs:StartMessageMoveTask",
+        "sqs:SendMessage",
+        "sqs:deletemessage"
+      ],
+      "Resource": "arn:aws:sqs:*:*:*"
+    },
+    {
+      "Sid": "AllowApiGatewayDeployments",
+      "Effect": "Allow",
+      "Action": "apigateway:POST",
+      "Resource": "*"
+    }
+  ]
 }
-  

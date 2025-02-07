@@ -59,7 +59,7 @@ export class SEIamPolicyStack extends cdk.Stack {
       }
     );
 
-    // region SE CUSTOM POLICY FOR EACH ORGANIZATION UNIT
+    // #region SE CUSTOM POLICY FOR EACH ORGANIZATION UNIT
     Object.entries(softwareEngineering).forEach(
       ([environmentName, environment]) => {
         // Skip ROOT account
@@ -77,9 +77,9 @@ export class SEIamPolicyStack extends cdk.Stack {
       */
       }
     );
-    // endregion
+    // #endregion
 
-    // region SNOWFLAKE SPECIAL PERMISSIONS
+    // #region SNOWFLAKE SPECIAL PERMISSIONS
     const snowflakePolicy = new iam.CfnManagedPolicy(
       this,
       "SnowflakeStorageIntegrationPolicy",
@@ -133,6 +133,6 @@ export class SEIamPolicyStack extends cdk.Stack {
         ],
       }
     );
-    // endregion
+    // #endregion
   }
 }

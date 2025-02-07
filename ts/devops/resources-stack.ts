@@ -51,5 +51,14 @@ export class SEDevOpsResourcesStack extends cdk.Stack {
         ),
       },
     });
+
+    // Grant child accounts
+    Object.entries(softwareEngineering).forEach(
+      ([environmentName, environment]) => {
+        // Skip ROOT account
+        if (environmentName === "ROOT") return;
+        this.seSecret.grantRead(new iam.AccountPrincipal(environment.account));
+      }
+    );
   }
 }

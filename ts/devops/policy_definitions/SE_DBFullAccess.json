@@ -1,0 +1,22 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DBFullAccess",
+      "Effect": "Allow",
+      "Action": [
+        "backup:*",
+        "backup-gateway:*",
+        "backup-storage:*",
+        "dax:*",
+        "dynamodb:*",
+        "s3:*",
+        "s3-object-lambda:*",
+        "s3-outposts:*",
+        "rds:*",
+        "redshift:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

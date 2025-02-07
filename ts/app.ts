@@ -1,17 +1,23 @@
 #!/usr/bin/env node
-import "source-map-support/register";
-import * as cdk from "aws-cdk-lib";
-import * as dotenv from "dotenv";
-import { softwareEngineering } from "../environments";
-import { SEDevOpsResourcesStack } from "../devops/resources-stack";
-import { SEIamPolicyStack } from "../devops/iam-stack";
-import { SEPermissionSetStack } from "../devops/permission-sets-stack";
-import { SEIamPipelineStack } from "../devops/pipeline-stack";
+import { config } from "dotenv";
+config();
 
-// Load environment variables from .env file
-dotenv.config({ override: true });
+import * as dotenv from "dotenv";
+import { softwareEngineering } from "./environments";
+import { SEDevOpsResourcesStack } from "./devops/resources-stack";
+import { SEIamPolicyStack } from "./devops/iam-stack";
+import { SEPermissionSetStack } from "./devops/permission-sets-stack";
+
+import * as cdk from "aws-cdk-lib";
 
 const app = new cdk.App();
+
+// Add environment validation
+if (!process.env.SSO_INSTANCE_ARN) {
+  throw new Error(
+    "SSO_INSTANCE_ARN environment variable is not set. Please set this variable before running the CDK commands."
+  );
+}
 
 // region ROOT ACCOUNT —— DEVOPS MANAGEMENT
 const seDevopsResourcesStack = new SEDevOpsResourcesStack(
@@ -25,19 +31,12 @@ const seDevopsResourcesStack = new SEDevOpsResourcesStack(
   }
 );
 
-// Create the pipeline stack in the ROOT account
-const pipelineStack = new SEIamPipelineStack(app, "SEIamPipelineStack", {
-  env: softwareEngineering["ROOT"],
-  description: "This stack contains the CI/CD pipeline for IAM permissions.",
-  terminationProtection: true,
-});
-
 // Create the SSO Permission Sets in the ROOT account
 const ssoStack = new SEPermissionSetStack(app, "SEPermissionSetStack", {
   env: softwareEngineering["ROOT"],
   description: "This stack contains SSO Permission Sets for SE accounts.",
   terminationProtection: true,
-  ssoInstanceArn: process.env.SSO_INSTANCE_ARN || "",
+  ssoInstanceArn: process.env.SSO_INSTANCE_ARN as string,
 });
 
 // region IAM POLICIES
@@ -59,8 +58,6 @@ Object.entries(softwareEngineering).forEach(
     );
 
     if (process.env.JOB_ROLE === "DevOps") {
-      // Create the pipeline after IAM Policies
-      pipelineStack.addDependency(policyStack);
       // Create the permission sets after IAM Policies
       ssoStack.addDependency(policyStack);
     }

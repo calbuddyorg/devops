@@ -9,7 +9,13 @@ import * as path from "path";
  * @throws {Error} If the file cannot be read or parsed
  */
 export function policyReader(filename: string): any {
-  const filePath = path.join("policy-definitions", filename);
+  const filePath = path.join(
+    __dirname,
+    "..",
+    "devops",
+    "policy_definitions",
+    filename
+  );
   try {
     const fileContent = fs.readFileSync(filePath, "utf-8");
     return JSON.parse(fileContent);

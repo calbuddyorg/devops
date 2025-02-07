@@ -6,6 +6,9 @@
       "es2020",
       "dom"
     ],
+    "types": [
+      "node"
+    ],
     "declaration": true,
     "strict": true,
     "noImplicitAny": true,
@@ -21,11 +24,19 @@
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
     "typeRoots": [
-      "./node_modules/@types"
-    ]
+      "./node_modules/@types",
+      "./types"
+    ],
+    "outDir": "./dist",
+    "rootDir": ".",
+    "baseUrl": "."
   },
+  "include": [
+    "**/*.ts"
+  ],
   "exclude": [
     "node_modules",
-    "cdk.out"
+    "cdk.out",
+    "dist"
   ]
 }

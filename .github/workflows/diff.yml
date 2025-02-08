@@ -1,18 +1,24 @@
-name: CDK Deploy
+name: CDK Diff
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "devops/**"
   workflow_dispatch:
 
 permissions:
   id-token: write # Required for OIDC
   contents: read # Required to checkout the repository
+  actions: write # Required to trigger workflows
 
 env:
   AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
   AWS_REGION: us-east-2
 
 jobs:
-  deploy:
+  diff:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -33,7 +39,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Deploy CDK Stack
+      - name: CDK Diff
         env:
           GITHUB_ORG_NAME: ${{ github.repository_owner }}
-        run: npx cdk deploy --all --require-approval never
+        run: npx cdk diff
+
+      - name: Trigger Deploy Workflow
+        run: |
+          gh auth login --with-token <<< "${{ github.token }}"
+          gh workflow run deploy.yml --ref ${{ github.ref }}

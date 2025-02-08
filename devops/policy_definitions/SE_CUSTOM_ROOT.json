@@ -18,20 +18,6 @@
           "kms:ResourceAliases": "alias/SE_Root_KMS_Key"
         }
       }
-    },
-    {
-      "Sid": "SecretsRootAccountSpecialPolicy",
-      "Effect": "Allow",
-      "Action": [
-        "secretsmanager:GetSecretValue",
-        "secretsmanager:PutSecretValue",
-        "secretsmanager:DescribeSecret",
-        "secretsmanager:ListSecrets",
-        "secretsmanager:ListSecretVersionIds"
-      ],
-      "Resource": [
-        "arn:aws:secretsmanager:us-east-2:481180369246:secret:SE_Configuration*"
-      ]
     }
   ]
 }

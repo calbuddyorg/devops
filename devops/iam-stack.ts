@@ -66,15 +66,17 @@ export class SEIamPolicyStack extends cdk.Stack {
         if (environmentName === "ROOT") return;
 
         // Conditionally create a custom policy for each environment
-        /* Commented out as in original
-      if (this.account === environment.account) {
-        const customPolicy = new iam.CfnManagedPolicy(this, `CUSTOM_${environmentName}`, {
-          policyDocument: policyReader(`SE_CUSTOM_${environmentName}.json`),
-          description: `Special and carefully designed policies for the SE ${environmentName} Organization Unit`,
-          managedPolicyName: `SE_CUSTOM_${environmentName}`,
-        });
-      }
-      */
+        if (this.account === environment.account) {
+          const customPolicy = new iam.CfnManagedPolicy(
+            this,
+            `CUSTOM_${environmentName}`,
+            {
+              policyDocument: policyReader(`SE_CUSTOM_${environmentName}.json`),
+              description: `Special and carefully designed policies for the SE ${environmentName} Organization Unit`,
+              managedPolicyName: `SE_CUSTOM_${environmentName}`,
+            }
+          );
+        }
       }
     );
     // #endregion

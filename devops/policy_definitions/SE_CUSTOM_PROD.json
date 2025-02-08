@@ -2,18 +2,6 @@
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "SecretsProdAccountSpecialPolicy",
-      "Effect": "Allow",
-      "Action": [
-        "secretsmanager:GetSecretValue",
-        "secretsmanager:PutSecretValue",
-        "secretsmanager:DescribeSecret",
-        "secretsmanager:ListSecrets",
-        "secretsmanager:ListSecretVersionIds"
-      ],
-      "Resource": ["arn:aws:secretsmanager:us-east-2:481180369246:secret:*"]
-    },
-    {
       "Sid": "CustomKMSKeyAccess",
       "Effect": "Allow",
       "Action": [
@@ -30,22 +18,6 @@
           "kms:ResourceAliases": "alias/SE_Root_KMS_Key"
         }
       }
-    },
-    {
-      "Sid": "AllowSqsRedriveActioninAllQueues",
-      "Effect": "Allow",
-      "Action": [
-        "sqs:StartMessageMoveTask",
-        "sqs:SendMessage",
-        "sqs:deletemessage"
-      ],
-      "Resource": "arn:aws:sqs:*:*:*"
-    },
-    {
-      "Sid": "AllowApiGatewayDeployments",
-      "Effect": "Allow",
-      "Action": "apigateway:POST",
-      "Resource": "*"
     }
   ]
 }

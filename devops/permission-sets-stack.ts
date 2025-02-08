@@ -10,10 +10,10 @@ import { Construct } from "constructs";
  *
  * Permission Sets cannot be assigned / provisioned via code.
  * They must be manually provisioned in the SSO Management Console.
- * The ROOT ADMIN is who decides whether to provision a permission set or propose changes.
+ * The ADMIN in the ROOT account is who decides whether to provision a permission set or propose changes.
  *
- * The goal behind this implementation is to update/mantain already provisioned permission sets
- * AWS automatically re-provisions the permission set whenever there is a change.
+ * The goal behind this implementation is to update/mantain already provisioned permission sets.
+ * AWS automatically re-provisions the permission set upon changes.
  */
 
 interface SEPermissionSetStackProps extends cdk.StackProps {

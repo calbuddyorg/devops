@@ -1,5 +1,5 @@
 import * as cdk from "aws-cdk-lib";
-
+// TODO: Define this at the GitHub Actions Environment Variables level.
 export const softwareEngineering: { [key: string]: cdk.Environment } = {
   ROOT: {
     account: "481180369246",

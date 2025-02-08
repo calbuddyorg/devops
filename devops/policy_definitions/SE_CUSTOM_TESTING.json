@@ -18,35 +18,6 @@
           "kms:ResourceAliases": "alias/SE_Root_KMS_Key"
         }
       }
-    },
-    {
-      "Sid": "AllowSqsRedriveActioninAllQueues",
-      "Effect": "Allow",
-      "Action": [
-        "sqs:StartMessageMoveTask",
-        "sqs:SendMessage",
-        "sqs:deletemessage"
-      ],
-      "Resource": "arn:aws:sqs:*:*:*"
-    },
-    {
-      "Sid": "AllowApiGatewayDeployments",
-      "Effect": "Allow",
-      "Action": "apigateway:POST",
-      "Resource": "*"
-    },
-    {
-      "Sid": "AllowStepFunctionTesting",
-      "Effect": "Allow",
-      "Action": [
-        "states:StartExecution",
-        "states:StopExecution",
-        "states:SendTaskSuccess",
-        "states:SendTaskFailure",
-        "states:SendTaskHeartbeat",
-        "states:RedriveExecution"
-      ],
-      "Resource": "*"
     }
   ]
 }

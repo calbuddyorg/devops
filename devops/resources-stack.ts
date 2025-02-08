@@ -60,5 +60,51 @@ export class SEDevOpsResourcesStack extends cdk.Stack {
         this.seSecret.grantRead(new iam.AccountPrincipal(environment.account));
       }
     );
+
+    // #region GitHub Actions
+    // Create the OIDC provider for GitHub Actions
+    const githubOidcProvider = new iam.OpenIdConnectProvider(
+      this,
+      "GitHubOIDCProvider",
+      {
+        url: "https://token.actions.githubusercontent.com",
+        clientIds: ["sts.amazonaws.com"],
+      }
+    );
+
+    // Create a role for GitHub Actions
+    const githubActionsRole = new iam.Role(this, "GitHubActionsRole", {
+      roleName: "github-actions-role",
+      assumedBy: new iam.WebIdentityPrincipal(
+        githubOidcProvider.openIdConnectProviderArn,
+        {
+          /**
+           * This is the pattern to match the GitHub Actions OIDC provider.
+           * It matches pushes to the main branch in any repository in the organization.
+           */
+          StringLike: {
+            // ORG_NAME is set in the GitHub Action workflow
+            "token.actions.githubusercontent.com:sub": `repo:${process.env.GITHUB_ORG_NAME}/*:ref:refs/heads/main`,
+          },
+        }
+      ),
+    });
+
+    // Add policy to assume CDK bootstrap roles
+    githubActionsRole.addToPolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: ["sts:AssumeRole"],
+        resources: [
+          `arn:aws:iam::${this.account}:role/cdk-hnb659fds-cfn-exec-role-${this.account}-${this.region}`,
+          `arn:aws:iam::${this.account}:role/cdk-hnb659fds-deploy-role-${this.account}-${this.region}`,
+          `arn:aws:iam::${this.account}:role/cdk-hnb659fds-file-publishing-role-${this.account}-${this.region}`,
+          `arn:aws:iam::${this.account}:role/cdk-hnb659fds-image-publishing-role-${this.account}-${this.region}`,
+          `arn:aws:iam::${this.account}:role/cdk-hnb659fds-lookup-role-${this.account}-${this.region}`,
+        ],
+      })
+    );
+
+    // #endregion
   }
 }

@@ -90,6 +90,13 @@ export class SEDevOpsResourcesStack extends cdk.Stack {
       ),
     });
 
+    // Output GitHub Actions Role ARN for future reference
+    new cdk.CfnOutput(this, "GitHubActionsRoleArn", {
+      value: githubActionsRole.roleArn,
+      description: "The ARN of the GitHub Actions role.",
+      exportName: "GitHubActionsRoleArn",
+    });
+
     // Add policy to assume CDK bootstrap roles
     githubActionsRole.addToPolicy(
       new iam.PolicyStatement({

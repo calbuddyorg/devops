@@ -1,6 +1,11 @@
-name: CDK Deploy
+name: Deploy using CDK
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "devops/**"
   workflow_dispatch:
 
 permissions:
@@ -11,9 +16,10 @@ env:
   AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
   AWS_REGION: ${{ secrets.AWS_REGION }}
   SSO_INSTANCE_ARN: ${{ secrets.SSO_INSTANCE_ARN }}
+  GITHUB_ORG_NAME: ${{ github.repository_owner }}
 
 jobs:
-  deploy:
+  diff:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -34,7 +40,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Deploy CDK Stack
-        env:
-          GITHUB_ORG_NAME: ${{ github.repository_owner }}
-        run: npx cdk deploy --all --require-approval never
+      - name: CDK Diff
+        run: npm run cdk:diff
+
+      - name: Deploy Changes
+        run: npm run cdk:deploy

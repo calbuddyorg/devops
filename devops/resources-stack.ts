@@ -86,6 +86,9 @@ export class SEDevOpsResourcesStack extends cdk.Stack {
             // ORG_NAME is set in the GitHub Action workflow
             "token.actions.githubusercontent.com:sub": `repo:${process.env.GITHUB_ORG_NAME}/*:ref:refs/heads/main`,
           },
+          StringEquals: {
+            "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+          },
         }
       ),
     });
@@ -101,7 +104,7 @@ export class SEDevOpsResourcesStack extends cdk.Stack {
     githubActionsRole.addToPolicy(
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
-        actions: ["sts:AssumeRole"],
+        actions: ["sts:AssumeRole", "sts:AssumeRoleWithWebIdentity"],
         resources: [
           `arn:aws:iam::${this.account}:role/cdk-hnb659fds-cfn-exec-role-${this.account}-${this.region}`,
           `arn:aws:iam::${this.account}:role/cdk-hnb659fds-deploy-role-${this.account}-${this.region}`,
